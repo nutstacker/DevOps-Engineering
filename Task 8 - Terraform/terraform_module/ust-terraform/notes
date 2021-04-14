@@ -1,0 +1,169 @@
+pem:    Privacy Enhanced Mail
+ppk:    Putty Private Key
+
+Linux / Mac guide:
+
+mv ~/Downloads/server-key-pair.pem  ~/.ssh
+
+ls -l ~/.ssh/server-key-pair.pem
+
+chmod 400 ~/.ssh/server-key-pair.pem 
+
+venkat
+
+-r-------- 
+
+------------------------------------------------------------------
+connect with ssh
+syntax: my-instance-user-name@my-instance-public-dns-name 
+
+alernative:
+my-instance-user-name@my-instance-IPV6-address 
+
+ssh -i ~/.ssh/server-key-pair.pem ec2-user@54.251.30.172
+
+Do you want to connect (yes/no)? yes
+
+
+pem  to ppk 
+
+my-instance-user-name@my-instance-public-dns-name
+
+
+------------------------------------------------------------------
+
+ls ~/.ssh/id_rsa
+
+id_rsa 
+id_rsa.pub
+
+
+
+-------------------------------------------------
+Generate ssh Key :  ssh-keygen 
+
+id_rsa
+id_rsa.pub 
+
+with custom ssh key
+
+ssh -i ~/.ssh/id_rsa ec2-user@54.251.30.172
+
+ssh -i ec2-user@54.251.30.172
+
+----------------------------------------------------------------------
+Provisioners ?
+
+Userdata attribute 
+	Initial data when launching the instance
+        Passed to the cloud provider
+
+
+remote-exec provisioner
+
+Invokes script on a remote resource after it is create
+
+inline - list of commands
+script - path
+
+file provisioner
+- copy files or directories from local to newly created resource
+
+local-exec provisioner
+
+
+Provisioners are not recommended
+
+- use user_data if available
+- breaks idempotency concept
+- TF does't know what you execute 
+- breaks current-desired state comparison 
+
+Alternative to remote-exec
+
+ - use configuration management tools
+ - once server provisioned , hand over to those tools
+ - 
+Alternative to local-exec
+
+- use "local" provider
+
+-------------------------------------------------------------------------------------------------
+Without Modules
+
+	Complex Configurations
+	huge file 
+	no overview
+
+Module ?
+= container for multiple resources , used together
+
+
+Why Module?
+Organize and group configurations
+
+encapsulate into distinct logical components
+
+re-use 
+
+
+ex:- 
+module for creating instance
+module for creating server (firewall, vpc, security group, instance .)
+
+------------------------------------------------------------------
+
+Modules 
+
+Customize the configuration with variables 
+
+            Input variables     -->  Web Server module -->  output values
+
+
+expose created resources or specific attribute
+
+Like a function definition
+
+Input variables = Like function arguments
+output values = like function return values 
+
+------------------------------------------------------------------------------------
+Project Structure for Modules 
+
+ - main.TF
+ - variables.TF
+ - outputs.TF
+ - provider.TF 
+
+
+- root module 
+- /modules = "child Modules"
+
+"child module" - a module that is called by another configuration 
+
+
+values are defined in .tfvars file 
+    --> set as values in variables.tf in root 
+        --> values are passed to child module as arguments
+			--> via variables.tf in child module 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

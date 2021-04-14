@@ -1,0 +1,8 @@
+vpc_cidr_block = "10.0.0.0/16"
+subnet_cidr_block = "10.0.10.0/24"
+avail_zone = "ap-south-1a"
+env_prefix = "dev"
+my_ip = "109.169.23.79/32"
+instance_type = "t2.micro"
+private_key_location = "C:/Users/manup/Downloads"
+image_name = "amzn2-ami-hvm-*-x86_64-gp2"
